@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PoliFoodCaso.Models.DTOs;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PoliFoodCaso.Interfaces;
+using PoliFoodCaso.Models.DTOs;
 
 namespace PoliFoodCaso.Controllers
 {
@@ -22,7 +23,7 @@ namespace PoliFoodCaso.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDTO model)
         {
-            var result = await _authService.Register(model.Email, model.Password, model.Role);
+            var result = await _authService.Register(model.Email, model.Password);
 
             if (result.Succeeded)
             {
@@ -43,6 +44,18 @@ namespace PoliFoodCaso.Controllers
             }
 
             return Unauthorized(new { Message = "Credenciales incorrectas." });
+        }
+
+        [HttpPost("create-vendor")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CreateVendor([FromBody] CreateVendorDTO model)
+        {
+            var result = await _authService.CreateVendor(model.Email, model.Password, model.nombre_tienda);
+
+            if (result.Succeeded)
+                return Ok(new { Message = $"Vendor {model.Email} y tienda {model.nombre_tienda} creados con éxito." });
+
+            return BadRequest(result.Errors);
         }
     }
 }

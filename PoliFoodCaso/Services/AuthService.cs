@@ -29,10 +29,10 @@ namespace PoliFoodCaso.Services
             _context = contexto;
         }
 
-        public async Task<IdentityResult> Register(string correo, string contrasena)
+        public async Task<IdentityResult> Register(string email, string password)
         {
-            var usuario = new IdentityUser { UserName = correo, Email = correo };
-            var resultado = await _manejadorUsuarios.CreateAsync(usuario, contrasena);
+            var usuario = new IdentityUser { UserName = email, Email = email };
+            var resultado = await _manejadorUsuarios.CreateAsync(usuario, password);
 
             if (resultado.Succeeded)
             {
@@ -45,10 +45,10 @@ namespace PoliFoodCaso.Services
             return resultado;
         }
 
-        public async Task<IdentityResult> CreateVendor(string correo, string contrasena, string nombreTienda)
+        public async Task<IdentityResult> CreateVendor(string email, string password, string nombre_tienda)
         {
-            var usuario = new IdentityUser { UserName = correo, Email = correo };
-            var resultado = await _manejadorUsuarios.CreateAsync(usuario, contrasena);
+            var usuario = new IdentityUser { UserName = email, Email = email };
+            var resultado = await _manejadorUsuarios.CreateAsync(usuario, password);
 
             if (resultado.Succeeded)
             {
@@ -59,23 +59,23 @@ namespace PoliFoodCaso.Services
 
                 var tienda = new Tienda
                 {
-                    nombre_tienda = nombreTienda,
+                    nombre_tienda = nombre_tienda,
                     vendorId = usuario.Id,
                     isActive = 1
                 };
 
-                _context.Tienda.Add(tienda);
+                _context.Tiendas.Add(tienda);
                 await _context.SaveChangesAsync();
             }
 
             return resultado;
         }
 
-        public async Task<string?> Login(string correo, string contrasena)
+        public async Task<string?> Login(string email, string password)
         {
-            var usuario = await _manejadorUsuarios.FindByEmailAsync(correo);
+            var usuario = await _manejadorUsuarios.FindByEmailAsync(email);
 
-            if (usuario != null && await _manejadorUsuarios.CheckPasswordAsync(usuario, contrasena))
+            if (usuario != null && await _manejadorUsuarios.CheckPasswordAsync(usuario, password))
             {
                 var rolesUsuario = await _manejadorUsuarios.GetRolesAsync(usuario);
                 return GenerarTokenJwt(usuario, rolesUsuario);
