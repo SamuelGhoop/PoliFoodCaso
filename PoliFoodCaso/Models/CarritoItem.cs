@@ -10,6 +10,7 @@ namespace PoliFoodCaso.Models
         public Guid id_carrito_item { get; set; }
 
         [Required]
+        [Range(1, 150, ErrorMessage = "La cantidad debe estar entre 1 y 150")]
         public int cantidad { get; set; }
 
         // ID del student dueño del carrito (string porque Identity guarda IDs así)

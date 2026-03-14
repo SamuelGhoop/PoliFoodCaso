@@ -16,32 +16,32 @@ namespace PoliFoodCaso.Services
         private readonly IConfiguration _configuracion;
         private readonly ApplicationDbContext _context;
 
-        public AuthService( 
+        public AuthService(
             UserManager<IdentityUser> manejadorUsuarios,
             RoleManager<IdentityRole> manejadorRoles,
             IConfiguration configuracion,
-            ApplicationDbContext contexto
+            ApplicationDbContext context
         )
         {
             _manejadorUsuarios = manejadorUsuarios;
             _manejadorRoles = manejadorRoles;
             _configuracion = configuracion;
-            _context = contexto;
+            _context = context;
         }
 
-        public async Task<IdentityResult> Register(string email, string password)
+        public async Task<IdentityResult> Register(string email, string password, string role)
         {
             var usuario = new IdentityUser { UserName = email, Email = email };
             var resultado = await _manejadorUsuarios.CreateAsync(usuario, password);
 
             if (resultado.Succeeded)
             {
-                if (!await _manejadorRoles.RoleExistsAsync("Student"))
-                    await _manejadorRoles.CreateAsync(new IdentityRole("Student"));
+                if (!await _manejadorRoles.RoleExistsAsync(role))
+                    await _manejadorRoles.CreateAsync(new IdentityRole(role));
 
-                await _manejadorUsuarios.AddToRoleAsync(usuario, "Student");
+                await _manejadorUsuarios.AddToRoleAsync(usuario, role);
             }
-             
+
             return resultado;
         }
 
@@ -57,14 +57,14 @@ namespace PoliFoodCaso.Services
 
                 await _manejadorUsuarios.AddToRoleAsync(usuario, "Vendor");
 
-                var tienda = new Tienda
+                var nueva_tienda = new Tienda
                 {
                     nombre_tienda = nombre_tienda,
                     vendorId = usuario.Id,
                     isActive = 1
                 };
 
-                _context.Tienda.Add(tienda);
+                _context.Tienda.Add(nueva_tienda);
                 await _context.SaveChangesAsync();
             }
 

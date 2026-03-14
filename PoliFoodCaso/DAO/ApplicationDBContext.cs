@@ -14,41 +14,24 @@ namespace PoliFoodCaso.DAO
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Orden> Orden { get; set; }
         public DbSet<OrdenItem> OrdenItem { get; set; }
-
         public DbSet<CarritoItem> CarritoItem { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            var adminRolId = "rol-admin-001";
-            builder.Entity<IdentityRole>().HasData(new IdentityRole
-            {
-                Id = adminRolId,
-                Name = "Admin",
-                NormalizedName = "ADMIN"
-            });
+            // Evitar múltiples rutas de cascada en OrdenItem
+            builder.Entity<OrdenItem>()
+                .HasOne(oi => oi.producto)
+                .WithMany()
+                .HasForeignKey(oi => oi.productoId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            var adminId = "usuario-admin-001";
-            var hasher = new PasswordHasher<IdentityUser>();
-            var adminUsuario = new IdentityUser
-            {
-                Id = adminId,
-                UserName = "admin@polifood.edu",
-                NormalizedUserName = "ADMIN@POLIFOOD.EDU",
-                Email = "admin@polifood.edu",
-                NormalizedEmail = "ADMIN@POLIFOOD.EDU",
-                EmailConfirmed = true,
-                SecurityStamp = "stamp-admin-001" //Requisito oara que no falle porque está fijo
-            };
-            adminUsuario.PasswordHash = hasher.HashPassword(adminUsuario, "Hola1234");
-
-            builder.Entity<IdentityUser>().HasData(adminUsuario);
-
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
-            {
-                UserId = adminId,
-                RoleId = adminRolId
-            });
+            builder.Entity<OrdenItem>()
+                .HasOne(oi => oi.orden)
+                .WithMany()
+                .HasForeignKey(oi => oi.ordenId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
