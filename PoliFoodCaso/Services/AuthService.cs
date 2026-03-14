@@ -41,7 +41,7 @@ namespace PoliFoodCaso.Services
 
                 await _manejadorUsuarios.AddToRoleAsync(usuario, "Student");
             }
-
+             
             return resultado;
         }
 
@@ -64,7 +64,7 @@ namespace PoliFoodCaso.Services
                     isActive = 1
                 };
 
-                _context.Tiendas.Add(tienda);
+                _context.Tienda.Add(tienda);
                 await _context.SaveChangesAsync();
             }
 

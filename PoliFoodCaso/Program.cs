@@ -44,6 +44,8 @@ builder.Services.AddAuthentication(options => {
 
 
 // Add services to the container.
+builder.Services.AddScoped<ITiendaService, TiendaService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

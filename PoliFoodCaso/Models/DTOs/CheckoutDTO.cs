@@ -16,7 +16,5 @@ namespace PoliFoodCaso.Models.DTOs
     {
         [Required(ErrorMessage = "El carrito no puede estar vacío")]
         public List<CheckoutItemDTO> items { get; set; }
-
-        public string? notas { get; set; }
     }
 }

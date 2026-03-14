@@ -9,13 +9,13 @@ namespace PoliFoodCaso.DAO
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public DbSet<Tienda> Tiendas { get; set; }
-        public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<Producto> Productos { get; set; }
-        public DbSet<Orden> Ordenes { get; set; }
-        public DbSet<OrdenItem> OrdenItems { get; set; }
+        public DbSet<Tienda> Tienda { get; set; }
+        public DbSet<Categoria> Categoria { get; set; }
+        public DbSet<Producto> Producto { get; set; }
+        public DbSet<Orden> Orden { get; set; }
+        public DbSet<OrdenItem> OrdenItem { get; set; }
 
-        public DbSet<CarritoItem> CarritoItems { get; set; }
+        public DbSet<CarritoItem> CarritoItem { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
