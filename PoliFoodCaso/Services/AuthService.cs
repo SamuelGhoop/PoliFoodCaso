@@ -36,10 +36,13 @@ namespace PoliFoodCaso.Services
 
             if (resultado.Succeeded)
             {
-                if (!await _manejadorRoles.RoleExistsAsync(role))
-                    await _manejadorRoles.CreateAsync(new IdentityRole(role));
+                //Solo Admin puede venir del register, cualquier otro queda como Student
+                var rolValido = role == "Admin" ? "Admin" : "Student";
 
-                await _manejadorUsuarios.AddToRoleAsync(usuario, role);
+                if (!await _manejadorRoles.RoleExistsAsync(rolValido))
+                    await _manejadorRoles.CreateAsync(new IdentityRole(rolValido));
+
+                await _manejadorUsuarios.AddToRoleAsync(usuario, rolValido);
             }
 
             return resultado;
