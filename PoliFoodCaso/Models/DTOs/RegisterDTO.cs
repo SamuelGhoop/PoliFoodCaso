@@ -12,7 +12,6 @@ namespace PoliFoodCaso.Models.DTOs
         [MinLength(8)]
         public string Password { get; set; } = null!;
 
-        [Required]
         public string Role { get; set; } = "Student";
     }
 }
