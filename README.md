@@ -57,11 +57,6 @@ dotnet ef migrations add MigracionFinal
 dotnet ef database update
 ```
 
-### 4. Correr el proyecto
-```bash
-dotnet run
-```
-
 📖 Documentación interactiva: `https://localhost:{puerto}/scalar/v1`
 
 ---
