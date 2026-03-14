@@ -213,3 +213,6 @@ PoliFood/
 ├── appsettings.json
 └── Program.cs
 ```
+# Miembros:
+-Samuel Giraldo Jimenez
+-Jeronimo Tavera Ramirez
