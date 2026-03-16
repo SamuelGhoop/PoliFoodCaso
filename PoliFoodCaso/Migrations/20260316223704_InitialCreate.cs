@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace PoliFoodCaso.Migrations
 {
     /// <inheritdoc />
-    public partial class MigracionFinal : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -284,6 +286,77 @@ namespace PoliFoodCaso.Migrations
                         column: x => x.productoId,
                         principalTable: "Producto",
                         principalColumn: "id_producto");
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "a1b2c3d4-0001-4000-8000-000000000001", "a1b2c3d4-0001-4000-8000-000000000001", "Admin", "ADMIN" },
+                    { "a1b2c3d4-0002-4000-8000-000000000002", "a1b2c3d4-0002-4000-8000-000000000002", "Vendor", "VENDOR" },
+                    { "a1b2c3d4-0003-4000-8000-000000000003", "a1b2c3d4-0003-4000-8000-000000000003", "Student", "STUDENT" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "b1b2c3d4-1001-4000-8000-000000000001", 0, "b1b2c3d4-1001-4000-8000-000000000001", "admin@polifood.edu", true, false, null, "ADMIN@POLIFOOD.EDU", "ADMIN@POLIFOOD.EDU", "AQAAAAIAAYagAAAAEEBWGNitMvuS+1Fw5Yby2cDtcrn7ZRJWCz1ZNei8DQ1UxMRtzahLv77X6zn5eY/3+g==", null, false, "seed-stamp-admin1", false, "admin@polifood.edu" },
+                    { "b1b2c3d4-2001-4000-8000-000000000002", 0, "b1b2c3d4-2001-4000-8000-000000000002", "burguer@polifood.edu", true, false, null, "BURGUER@POLIFOOD.EDU", "BURGUER@POLIFOOD.EDU", "AQAAAAIAAYagAAAAEEBWGNitMvuS+1Fw5Yby2cDtcrn7ZRJWCz1ZNei8DQ1UxMRtzahLv77X6zn5eY/3+g==", null, false, "seed-stamp-vendor1", false, "burguer@polifood.edu" },
+                    { "b1b2c3d4-2002-4000-8000-000000000003", 0, "b1b2c3d4-2002-4000-8000-000000000003", "pizza@polifood.edu", true, false, null, "PIZZA@POLIFOOD.EDU", "PIZZA@POLIFOOD.EDU", "AQAAAAIAAYagAAAAEEBWGNitMvuS+1Fw5Yby2cDtcrn7ZRJWCz1ZNei8DQ1UxMRtzahLv77X6zn5eY/3+g==", null, false, "seed-stamp-vendor2", false, "pizza@polifood.edu" },
+                    { "b1b2c3d4-3001-4000-8000-000000000004", 0, "b1b2c3d4-3001-4000-8000-000000000004", "estudiante@polifood.edu", true, false, null, "ESTUDIANTE@POLIFOOD.EDU", "ESTUDIANTE@POLIFOOD.EDU", "AQAAAAIAAYagAAAAEEBWGNitMvuS+1Fw5Yby2cDtcrn7ZRJWCz1ZNei8DQ1UxMRtzahLv77X6zn5eY/3+g==", null, false, "seed-stamp-student1", false, "estudiante@polifood.edu" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Tienda",
+                columns: new[] { "id_tienda", "isActive", "nombre_tienda", "vendorId" },
+                values: new object[,]
+                {
+                    { new Guid("c1b2c3d4-4001-4000-8000-000000000005"), 1, "Burguer Campus", "b1b2c3d4-2001-4000-8000-000000000002" },
+                    { new Guid("c1b2c3d4-4002-4000-8000-000000000006"), 1, "Pizza Poli", "b1b2c3d4-2002-4000-8000-000000000003" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "a1b2c3d4-0001-4000-8000-000000000001", "b1b2c3d4-1001-4000-8000-000000000001" },
+                    { "a1b2c3d4-0002-4000-8000-000000000002", "b1b2c3d4-2001-4000-8000-000000000002" },
+                    { "a1b2c3d4-0002-4000-8000-000000000002", "b1b2c3d4-2002-4000-8000-000000000003" },
+                    { "a1b2c3d4-0003-4000-8000-000000000003", "b1b2c3d4-3001-4000-8000-000000000004" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categoria",
+                columns: new[] { "id_categoria", "isActive", "nombre_categoria", "tiendaId" },
+                values: new object[,]
+                {
+                    { new Guid("d1b2c3d4-5001-4000-8000-000000000007"), 1, "Hamburguesas", new Guid("c1b2c3d4-4001-4000-8000-000000000005") },
+                    { new Guid("d1b2c3d4-5002-4000-8000-000000000008"), 1, "Bebidas", new Guid("c1b2c3d4-4001-4000-8000-000000000005") },
+                    { new Guid("d1b2c3d4-5003-4000-8000-000000000009"), 1, "Pizzas", new Guid("c1b2c3d4-4002-4000-8000-000000000006") },
+                    { new Guid("d1b2c3d4-5004-4000-8000-000000000010"), 1, "Postres", new Guid("c1b2c3d4-4002-4000-8000-000000000006") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Producto",
+                columns: new[] { "id_producto", "categoriaId", "descripcion", "disponible", "imagen_url", "isActive", "minutos_preparacion", "nombre_producto", "precio" },
+                values: new object[,]
+                {
+                    { new Guid("e1b2c3d4-6001-4000-8000-000000000011"), new Guid("d1b2c3d4-5001-4000-8000-000000000007"), "Carne 150g, lechuga, tomate, queso", true, "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300", 1, 10, "Clásica", 12500.0 },
+                    { new Guid("e1b2c3d4-6002-4000-8000-000000000012"), new Guid("d1b2c3d4-5001-4000-8000-000000000007"), "Doble carne, doble queso cheddar", true, "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=300", 1, 12, "Doble Cheddar", 16500.0 },
+                    { new Guid("e1b2c3d4-6003-4000-8000-000000000013"), new Guid("d1b2c3d4-5001-4000-8000-000000000007"), "Pechuga apanada, mayonesa especial", true, "https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=300", 1, 14, "Pollo Crispy", 14000.0 },
+                    { new Guid("e1b2c3d4-6004-4000-8000-000000000014"), new Guid("d1b2c3d4-5001-4000-8000-000000000007"), "Hamburguesa de garbanzo vegana", true, "https://images.unsplash.com/photo-1520072959219-c595dc870360?w=300", 1, 10, "Veggie", 13000.0 },
+                    { new Guid("e1b2c3d4-6005-4000-8000-000000000015"), new Guid("d1b2c3d4-5002-4000-8000-000000000008"), "350ml fría", true, "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=300", 1, 1, "Gaseosa", 3500.0 },
+                    { new Guid("e1b2c3d4-6006-4000-8000-000000000016"), new Guid("d1b2c3d4-5002-4000-8000-000000000008"), "Limón, agua, azúcar, hielo", true, "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=300", 1, 3, "Limonada", 4500.0 },
+                    { new Guid("e1b2c3d4-6007-4000-8000-000000000017"), new Guid("d1b2c3d4-5003-4000-8000-000000000009"), "Salsa, mozzarella y albahaca", true, "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=300", 1, 15, "Margarita", 18000.0 },
+                    { new Guid("e1b2c3d4-6008-4000-8000-000000000018"), new Guid("d1b2c3d4-5003-4000-8000-000000000009"), "Salsa, pepperoni y mozzarella", true, "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=300", 1, 18, "Pepperoni", 22000.0 },
+                    { new Guid("e1b2c3d4-6009-4000-8000-000000000019"), new Guid("d1b2c3d4-5003-4000-8000-000000000009"), "Mozzarella, cheddar, azul, parm", true, "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300", 1, 20, "4 Quesos", 25000.0 },
+                    { new Guid("e1b2c3d4-6010-4000-8000-000000000020"), new Guid("d1b2c3d4-5003-4000-8000-000000000009"), "Piña, jamón, mozzarella", false, "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300", 1, 18, "Hawaiana", 21000.0 },
+                    { new Guid("e1b2c3d4-6011-4000-8000-000000000021"), new Guid("d1b2c3d4-5004-4000-8000-000000000010"), "Porción individual artesanal", true, "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=300", 1, 2, "Tiramisú", 8000.0 },
+                    { new Guid("e1b2c3d4-6012-4000-8000-000000000022"), new Guid("d1b2c3d4-5004-4000-8000-000000000010"), "Brownie de chocolate con helado", true, "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=300", 1, 2, "Brownie", 7000.0 }
                 });
 
             migrationBuilder.CreateIndex(

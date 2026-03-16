@@ -29,7 +29,7 @@ namespace PoliFoodCaso.Models
 
         public string? fecha_pago { get; set; }
 
-        public DateTime fecha_creacion { get; set; } = DateTime.Now;
+        public DateTime fecha_creacion { get; set; } 
 
         public int isActive { get; set; } = 1;
 

@@ -12,8 +12,8 @@ using PoliFoodCaso.DAO;
 namespace PoliFoodCaso.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260314033552_MigracionFinal")]
-    partial class MigracionFinal
+    [Migration("20260316223704_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,29 @@ namespace PoliFoodCaso.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a1b2c3d4-0001-4000-8000-000000000001",
+                            ConcurrencyStamp = "a1b2c3d4-0001-4000-8000-000000000001",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "a1b2c3d4-0002-4000-8000-000000000002",
+                            ConcurrencyStamp = "a1b2c3d4-0002-4000-8000-000000000002",
+                            Name = "Vendor",
+                            NormalizedName = "VENDOR"
+                        },
+                        new
+                        {
+                            Id = "a1b2c3d4-0003-4000-8000-000000000003",
+                            ConcurrencyStamp = "a1b2c3d4-0003-4000-8000-000000000003",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -140,6 +163,72 @@ namespace PoliFoodCaso.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b1b2c3d4-1001-4000-8000-000000000001",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b1b2c3d4-1001-4000-8000-000000000001",
+                            Email = "admin@polifood.edu",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@POLIFOOD.EDU",
+                            NormalizedUserName = "ADMIN@POLIFOOD.EDU",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEBWGNitMvuS+1Fw5Yby2cDtcrn7ZRJWCz1ZNei8DQ1UxMRtzahLv77X6zn5eY/3+g==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "seed-stamp-admin1",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@polifood.edu"
+                        },
+                        new
+                        {
+                            Id = "b1b2c3d4-2001-4000-8000-000000000002",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b1b2c3d4-2001-4000-8000-000000000002",
+                            Email = "burguer@polifood.edu",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "BURGUER@POLIFOOD.EDU",
+                            NormalizedUserName = "BURGUER@POLIFOOD.EDU",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEBWGNitMvuS+1Fw5Yby2cDtcrn7ZRJWCz1ZNei8DQ1UxMRtzahLv77X6zn5eY/3+g==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "seed-stamp-vendor1",
+                            TwoFactorEnabled = false,
+                            UserName = "burguer@polifood.edu"
+                        },
+                        new
+                        {
+                            Id = "b1b2c3d4-2002-4000-8000-000000000003",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b1b2c3d4-2002-4000-8000-000000000003",
+                            Email = "pizza@polifood.edu",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "PIZZA@POLIFOOD.EDU",
+                            NormalizedUserName = "PIZZA@POLIFOOD.EDU",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEBWGNitMvuS+1Fw5Yby2cDtcrn7ZRJWCz1ZNei8DQ1UxMRtzahLv77X6zn5eY/3+g==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "seed-stamp-vendor2",
+                            TwoFactorEnabled = false,
+                            UserName = "pizza@polifood.edu"
+                        },
+                        new
+                        {
+                            Id = "b1b2c3d4-3001-4000-8000-000000000004",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b1b2c3d4-3001-4000-8000-000000000004",
+                            Email = "estudiante@polifood.edu",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ESTUDIANTE@POLIFOOD.EDU",
+                            NormalizedUserName = "ESTUDIANTE@POLIFOOD.EDU",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEBWGNitMvuS+1Fw5Yby2cDtcrn7ZRJWCz1ZNei8DQ1UxMRtzahLv77X6zn5eY/3+g==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "seed-stamp-student1",
+                            TwoFactorEnabled = false,
+                            UserName = "estudiante@polifood.edu"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -202,6 +291,28 @@ namespace PoliFoodCaso.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "b1b2c3d4-1001-4000-8000-000000000001",
+                            RoleId = "a1b2c3d4-0001-4000-8000-000000000001"
+                        },
+                        new
+                        {
+                            UserId = "b1b2c3d4-2001-4000-8000-000000000002",
+                            RoleId = "a1b2c3d4-0002-4000-8000-000000000002"
+                        },
+                        new
+                        {
+                            UserId = "b1b2c3d4-2002-4000-8000-000000000003",
+                            RoleId = "a1b2c3d4-0002-4000-8000-000000000002"
+                        },
+                        new
+                        {
+                            UserId = "b1b2c3d4-3001-4000-8000-000000000004",
+                            RoleId = "a1b2c3d4-0003-4000-8000-000000000003"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -267,6 +378,36 @@ namespace PoliFoodCaso.Migrations
                     b.HasIndex("tiendaId");
 
                     b.ToTable("Categoria");
+
+                    b.HasData(
+                        new
+                        {
+                            id_categoria = new Guid("d1b2c3d4-5001-4000-8000-000000000007"),
+                            isActive = 1,
+                            nombre_categoria = "Hamburguesas",
+                            tiendaId = new Guid("c1b2c3d4-4001-4000-8000-000000000005")
+                        },
+                        new
+                        {
+                            id_categoria = new Guid("d1b2c3d4-5002-4000-8000-000000000008"),
+                            isActive = 1,
+                            nombre_categoria = "Bebidas",
+                            tiendaId = new Guid("c1b2c3d4-4001-4000-8000-000000000005")
+                        },
+                        new
+                        {
+                            id_categoria = new Guid("d1b2c3d4-5003-4000-8000-000000000009"),
+                            isActive = 1,
+                            nombre_categoria = "Pizzas",
+                            tiendaId = new Guid("c1b2c3d4-4002-4000-8000-000000000006")
+                        },
+                        new
+                        {
+                            id_categoria = new Guid("d1b2c3d4-5004-4000-8000-000000000010"),
+                            isActive = 1,
+                            nombre_categoria = "Postres",
+                            tiendaId = new Guid("c1b2c3d4-4002-4000-8000-000000000006")
+                        });
                 });
 
             modelBuilder.Entity("PoliFoodCaso.Models.Orden", b =>
@@ -375,6 +516,152 @@ namespace PoliFoodCaso.Migrations
                     b.HasIndex("categoriaId");
 
                     b.ToTable("Producto");
+
+                    b.HasData(
+                        new
+                        {
+                            id_producto = new Guid("e1b2c3d4-6001-4000-8000-000000000011"),
+                            categoriaId = new Guid("d1b2c3d4-5001-4000-8000-000000000007"),
+                            descripcion = "Carne 150g, lechuga, tomate, queso",
+                            disponible = true,
+                            imagen_url = "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300",
+                            isActive = 1,
+                            minutos_preparacion = 10,
+                            nombre_producto = "Clásica",
+                            precio = 12500.0
+                        },
+                        new
+                        {
+                            id_producto = new Guid("e1b2c3d4-6002-4000-8000-000000000012"),
+                            categoriaId = new Guid("d1b2c3d4-5001-4000-8000-000000000007"),
+                            descripcion = "Doble carne, doble queso cheddar",
+                            disponible = true,
+                            imagen_url = "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=300",
+                            isActive = 1,
+                            minutos_preparacion = 12,
+                            nombre_producto = "Doble Cheddar",
+                            precio = 16500.0
+                        },
+                        new
+                        {
+                            id_producto = new Guid("e1b2c3d4-6003-4000-8000-000000000013"),
+                            categoriaId = new Guid("d1b2c3d4-5001-4000-8000-000000000007"),
+                            descripcion = "Pechuga apanada, mayonesa especial",
+                            disponible = true,
+                            imagen_url = "https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=300",
+                            isActive = 1,
+                            minutos_preparacion = 14,
+                            nombre_producto = "Pollo Crispy",
+                            precio = 14000.0
+                        },
+                        new
+                        {
+                            id_producto = new Guid("e1b2c3d4-6004-4000-8000-000000000014"),
+                            categoriaId = new Guid("d1b2c3d4-5001-4000-8000-000000000007"),
+                            descripcion = "Hamburguesa de garbanzo vegana",
+                            disponible = true,
+                            imagen_url = "https://images.unsplash.com/photo-1520072959219-c595dc870360?w=300",
+                            isActive = 1,
+                            minutos_preparacion = 10,
+                            nombre_producto = "Veggie",
+                            precio = 13000.0
+                        },
+                        new
+                        {
+                            id_producto = new Guid("e1b2c3d4-6005-4000-8000-000000000015"),
+                            categoriaId = new Guid("d1b2c3d4-5002-4000-8000-000000000008"),
+                            descripcion = "350ml fría",
+                            disponible = true,
+                            imagen_url = "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=300",
+                            isActive = 1,
+                            minutos_preparacion = 1,
+                            nombre_producto = "Gaseosa",
+                            precio = 3500.0
+                        },
+                        new
+                        {
+                            id_producto = new Guid("e1b2c3d4-6006-4000-8000-000000000016"),
+                            categoriaId = new Guid("d1b2c3d4-5002-4000-8000-000000000008"),
+                            descripcion = "Limón, agua, azúcar, hielo",
+                            disponible = true,
+                            imagen_url = "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=300",
+                            isActive = 1,
+                            minutos_preparacion = 3,
+                            nombre_producto = "Limonada",
+                            precio = 4500.0
+                        },
+                        new
+                        {
+                            id_producto = new Guid("e1b2c3d4-6007-4000-8000-000000000017"),
+                            categoriaId = new Guid("d1b2c3d4-5003-4000-8000-000000000009"),
+                            descripcion = "Salsa, mozzarella y albahaca",
+                            disponible = true,
+                            imagen_url = "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=300",
+                            isActive = 1,
+                            minutos_preparacion = 15,
+                            nombre_producto = "Margarita",
+                            precio = 18000.0
+                        },
+                        new
+                        {
+                            id_producto = new Guid("e1b2c3d4-6008-4000-8000-000000000018"),
+                            categoriaId = new Guid("d1b2c3d4-5003-4000-8000-000000000009"),
+                            descripcion = "Salsa, pepperoni y mozzarella",
+                            disponible = true,
+                            imagen_url = "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=300",
+                            isActive = 1,
+                            minutos_preparacion = 18,
+                            nombre_producto = "Pepperoni",
+                            precio = 22000.0
+                        },
+                        new
+                        {
+                            id_producto = new Guid("e1b2c3d4-6009-4000-8000-000000000019"),
+                            categoriaId = new Guid("d1b2c3d4-5003-4000-8000-000000000009"),
+                            descripcion = "Mozzarella, cheddar, azul, parm",
+                            disponible = true,
+                            imagen_url = "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300",
+                            isActive = 1,
+                            minutos_preparacion = 20,
+                            nombre_producto = "4 Quesos",
+                            precio = 25000.0
+                        },
+                        new
+                        {
+                            id_producto = new Guid("e1b2c3d4-6010-4000-8000-000000000020"),
+                            categoriaId = new Guid("d1b2c3d4-5003-4000-8000-000000000009"),
+                            descripcion = "Piña, jamón, mozzarella",
+                            disponible = false,
+                            imagen_url = "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300",
+                            isActive = 1,
+                            minutos_preparacion = 18,
+                            nombre_producto = "Hawaiana",
+                            precio = 21000.0
+                        },
+                        new
+                        {
+                            id_producto = new Guid("e1b2c3d4-6011-4000-8000-000000000021"),
+                            categoriaId = new Guid("d1b2c3d4-5004-4000-8000-000000000010"),
+                            descripcion = "Porción individual artesanal",
+                            disponible = true,
+                            imagen_url = "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=300",
+                            isActive = 1,
+                            minutos_preparacion = 2,
+                            nombre_producto = "Tiramisú",
+                            precio = 8000.0
+                        },
+                        new
+                        {
+                            id_producto = new Guid("e1b2c3d4-6012-4000-8000-000000000022"),
+                            categoriaId = new Guid("d1b2c3d4-5004-4000-8000-000000000010"),
+                            descripcion = "Brownie de chocolate con helado",
+                            disponible = true,
+                            imagen_url = "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=300",
+                            isActive = 1,
+                            minutos_preparacion = 2,
+                            nombre_producto = "Brownie",
+                            precio = 7000.0
+                        });
                 });
 
             modelBuilder.Entity("PoliFoodCaso.Models.Tienda", b =>
@@ -397,6 +684,22 @@ namespace PoliFoodCaso.Migrations
                     b.HasKey("id_tienda");
 
                     b.ToTable("Tienda");
+
+                    b.HasData(
+                        new
+                        {
+                            id_tienda = new Guid("c1b2c3d4-4001-4000-8000-000000000005"),
+                            isActive = 1,
+                            nombre_tienda = "Burguer Campus",
+                            vendorId = "b1b2c3d4-2001-4000-8000-000000000002"
+                        },
+                        new
+                        {
+                            id_tienda = new Guid("c1b2c3d4-4002-4000-8000-000000000006"),
+                            isActive = 1,
+                            nombre_tienda = "Pizza Poli",
+                            vendorId = "b1b2c3d4-2002-4000-8000-000000000003"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
