@@ -99,8 +99,11 @@ namespace PoliFoodCaso.Services
 
         public async Task<List<Orden>> GetByTienda(Guid tiendaId)
         {
+            // Devuelve TODAS las órdenes de la tienda (activas + entregadas).
+            // El frontend filtra por estado en el dashboard. Para el cálculo de la
+            // cola "viva" (queue + ETA) se usa GetETA que sí filtra Entregadas.
             return await _context.Orden
-                .Where(o => o.tiendaId == tiendaId && o.estado != EstadoOrden.Entregada)
+                .Where(o => o.tiendaId == tiendaId)
                 .Include(o => o.tienda)
                 .OrderBy(o => o.fecha_creacion)
                 .ToListAsync();
