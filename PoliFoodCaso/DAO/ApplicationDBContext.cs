@@ -103,8 +103,8 @@ namespace PoliFoodCaso.DAO
             string tienda2Id = "c1b2c3d4-4002-4000-8000-000000000006";
 
             builder.Entity<Tienda>().HasData(
-                new Tienda { id_tienda = Guid.Parse(tienda1Id), nombre_tienda = "Burguer Campus", isActive = 1, vendorId = vendor1Id },
-                new Tienda { id_tienda = Guid.Parse(tienda2Id), nombre_tienda = "Pizza Poli", isActive = 1, vendorId = vendor2Id }
+                new Tienda { id_tienda = Guid.Parse(tienda1Id), nombre_tienda = "Burguer Campus", imagen_url = "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80", isActive = 1, vendorId = vendor1Id },
+                new Tienda { id_tienda = Guid.Parse(tienda2Id), nombre_tienda = "Pizza Poli", imagen_url = "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80", isActive = 1, vendorId = vendor2Id }
             );
 
             //CATEGORÍAS

@@ -15,5 +15,7 @@ namespace PoliFoodCaso.Models.DTOs
         [Required(ErrorMessage = "Debe ingresar el nombre de la tienda")]
         [MinLength(2)]
         public string nombre_tienda { get; set; } = null!;
+
+        public string imagen_url { get; set; } = "";
     }
 }

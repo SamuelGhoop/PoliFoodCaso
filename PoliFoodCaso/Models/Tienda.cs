@@ -13,6 +13,8 @@ namespace PoliFoodCaso.Models
         [MinLength(2, ErrorMessage = "El nombre debe tener al menos 2 caracteres")]
         public string nombre_tienda { get; set; }
 
+        public string imagen_url { get; set; } = "";
+
         public int isActive { get; set; } = 1;
 
         // ID del vendor dueño (string porque Identity guarda IDs así)

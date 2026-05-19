@@ -47,7 +47,7 @@ namespace PoliFoodCaso.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateVendor([FromBody] CreateVendorDTO model)
         {
-            var result = await _authService.CreateVendor(model.Email, model.Password, model.nombre_tienda);
+            var result = await _authService.CreateVendor(model.Email, model.Password, model.nombre_tienda, model.imagen_url);
 
             if (result.Succeeded)
                 return Ok(new { Message = $"Vendor {model.Email} y tienda {model.nombre_tienda} creados con éxito." });

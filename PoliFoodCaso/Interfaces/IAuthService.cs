@@ -6,6 +6,6 @@ namespace PoliFoodCaso.Interfaces
     {
         Task<IdentityResult> Register(string email, string password, string role);
         Task<string?> Login(string email, string password);
-        Task<IdentityResult> CreateVendor(string email, string password, string nombre_tienda);
+        Task<IdentityResult> CreateVendor(string email, string password, string nombre_tienda, string imagen_url);
     }
 }

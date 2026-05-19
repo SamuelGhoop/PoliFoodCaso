@@ -48,7 +48,7 @@ namespace PoliFoodCaso.Services
             return resultado;
         }
 
-        public async Task<IdentityResult> CreateVendor(string email, string password, string nombre_tienda)
+        public async Task<IdentityResult> CreateVendor(string email, string password, string nombre_tienda, string imagen_url)
         {
             var usuario = new IdentityUser { UserName = email, Email = email };
             var resultado = await _manejadorUsuarios.CreateAsync(usuario, password);
@@ -63,6 +63,7 @@ namespace PoliFoodCaso.Services
                 var nueva_tienda = new Tienda
                 {
                     nombre_tienda = nombre_tienda,
+                    imagen_url = imagen_url ?? "",
                     vendorId = usuario.Id,
                     isActive = 1
                 };
