@@ -7,7 +7,7 @@
 ![SQL Server](https://img.shields.io/badge/SQL_Server-2019-CC2927?style=flat-square)
 ![JWT](https://img.shields.io/badge/Auth-JWT-orange?style=flat-square)
 
----
+----
 
 ## 📋 Descripción
 
