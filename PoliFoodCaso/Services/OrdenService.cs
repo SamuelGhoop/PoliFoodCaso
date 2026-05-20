@@ -9,10 +9,12 @@ namespace PoliFoodCaso.Services
     public class OrdenService : IOrdenService
     {
         private readonly ApplicationDbContext _context;
+        private readonly ICarritoService _carritoService;
 
-        public OrdenService(ApplicationDbContext context)
+        public OrdenService(ApplicationDbContext context, ICarritoService carritoService)
         {
             _context = context;
+            _carritoService = carritoService;
         }
 
         public async Task<Orden> Create(CheckoutDTO checkout, string studentId)
@@ -25,6 +27,9 @@ namespace PoliFoodCaso.Services
             int maxMinutos = 0;
             var ordenItems = new List<OrdenItem>();
 
+            //Mapa de productos cargados para decrementar stock atómicamente al final
+            var productosUsados = new List<(Producto producto, int cantidad)>();
+
             foreach (var item in checkout.items)
             {
                 //Validar el producto
@@ -33,6 +38,8 @@ namespace PoliFoodCaso.Services
                     throw new Exception($"El producto {item.productoId} no existe.");
                 if (!producto.disponible)
                     throw new Exception($"El producto {producto.nombre_producto} no está disponible.");
+                if (item.cantidad > producto.existencias)
+                    throw new Exception($"Solo hay {producto.existencias} unidades de {producto.nombre_producto}.");
 
                 //Calcular total
                 total += producto.precio * item.cantidad;
@@ -47,15 +54,30 @@ namespace PoliFoodCaso.Services
                     cantidad = item.cantidad,
                     precio_unitario = producto.precio
                 });
+
+                productosUsados.Add((producto, item.cantidad));
             }
 
-            //Calcular ETA
-            var eta = await GetETA(ordenItems.First().productoId);
+            //Decrementar stock de cada producto comprado
+            foreach (var (producto, cantidad) in productosUsados)
+            {
+                producto.existencias -= cantidad;
+                if (producto.existencias == 0) producto.disponible = false;
+            }
+
+            //Resolver la tienda a partir del primer producto del carrito
+            var primerProducto = await _context.Producto
+                .Include(p => p.categoria)
+                .FirstAsync(p => p.id_producto == checkout.items.First().productoId);
+            var tiendaId = primerProducto.categoria!.tiendaId;
+
+            //Calcular ETA usando el tiendaId (no el productoId)
+            var eta = await GetETA(tiendaId);
 
             var orden = new Orden
             {
                 studentId = studentId,
-                tiendaId = (await _context.Producto.Include(p => p.categoria).FirstAsync(p => p.id_producto == checkout.items.First().productoId)).categoria.tiendaId,
+                tiendaId = tiendaId,
                 total = total,
                 minutos_estimados = maxMinutos + eta,
                 estado = EstadoOrden.Recibida,
@@ -73,6 +95,10 @@ namespace PoliFoodCaso.Services
             }
 
             await _context.SaveChangesAsync();
+
+            //Vaciar el carrito del student tras crear la orden exitosamente
+            await _carritoService.Clear(studentId);
+
             return orden;
         }
 

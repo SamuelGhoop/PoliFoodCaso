@@ -1,24 +1,23 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PoliFoodCaso.DAO;
 using PoliFoodCaso.Interfaces;
 using PoliFoodCaso.Models;
+using System.Security.Claims;
 
 namespace PoliFoodCaso.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TiendaController : Controller
+    public class TiendaController : ControllerBase
     {
         private readonly ITiendaService _tiendaService;
+        private readonly ApplicationDbContext _context;
 
-        public TiendaController(ITiendaService tiendaService)
+        public TiendaController(ITiendaService tiendaService, ApplicationDbContext context)
         {
             _tiendaService = tiendaService;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
+            _context = context;
         }
 
         [HttpGet]
@@ -37,6 +36,16 @@ namespace PoliFoodCaso.Controllers
         [Authorize(Roles = "Vendor")]
         public async Task<IActionResult> Update(Guid id, [FromBody] Tienda tienda)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null) return Unauthorized();
+
+            var existente = await _tiendaService.GetById(id);
+            if (existente == null) return NotFound();
+            if (existente.vendorId != userId)
+                return Forbid();
+
+            //Preservar vendorId original para que el body no pueda transferir la tienda
+            tienda.vendorId = existente.vendorId;
             return await _tiendaService.Update(id, tienda) ? NoContent() : NotFound();
         }
 
@@ -44,6 +53,14 @@ namespace PoliFoodCaso.Controllers
         [Authorize(Roles = "Admin,Vendor")]
         public async Task<IActionResult> ChangeStatus(Guid id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAdmin = User.IsInRole("Admin");
+            if (!isAdmin)
+            {
+                var existente = await _tiendaService.GetById(id);
+                if (existente == null) return NotFound();
+                if (existente.vendorId != userId) return Forbid();
+            }
             return await _tiendaService.ChangeStatus(id) ? Ok("Se ha cambiado el estado de la tienda") : NotFound();
         }
     }

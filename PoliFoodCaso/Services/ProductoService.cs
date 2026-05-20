@@ -18,8 +18,8 @@ namespace PoliFoodCaso.Services
         public async Task<List<Producto>> GetByTienda(Guid tiendaId)
         {
             return await _context.Producto
-                .Where(p => p.categoria.tiendaId == tiendaId && p.isActive == 1)
                 .Include(p => p.categoria)
+                .Where(p => p.categoria != null && p.categoria.tiendaId == tiendaId && p.isActive == 1)
                 .ToListAsync();
         }
 

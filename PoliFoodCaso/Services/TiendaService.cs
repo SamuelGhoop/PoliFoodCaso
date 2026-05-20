@@ -29,7 +29,7 @@ namespace PoliFoodCaso.Services
             if (tiendaExiste == null) return false;
 
             tiendaExiste.nombre_tienda = editedTienda.nombre_tienda;
-           
+            tiendaExiste.imagen_url = editedTienda.imagen_url;
 
             await _context.SaveChangesAsync();
 

@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PoliFoodCaso.Interfaces;
-using PoliFoodCaso.Models;
-using PoliFoodCaso.Services;
+using PoliFoodCaso.Models.DTOs;
+using System.Security.Claims;
 
 namespace PoliFoodCaso.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(Roles = "Student")]
-
-    public class CarritoController : Controller
+    public class CarritoController : ControllerBase
     {
         private readonly ICarritoService _carritoService;
 
@@ -19,32 +18,69 @@ namespace PoliFoodCaso.Controllers
             _carritoService = carritoService;
         }
 
-        public IActionResult Index()
+        private string? GetStudentId() => User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        [HttpGet]
+        public async Task<IActionResult> GetMine()
         {
-            return View();
+            var studentId = GetStudentId();
+            if (studentId == null) return Unauthorized();
+            return Ok(await _carritoService.GetByStudent(studentId));
         }
 
-        [HttpGet("{studentId}")]
-        public async Task<IActionResult> GetByStudent(string studentId) =>
-            Ok(await _carritoService.GetByStudent(studentId));
-
         [HttpPost]
-        public async Task<IActionResult> AddItem([FromBody] CarritoItem item)
+        public async Task<IActionResult> AddItem([FromBody] CarritoItemDTO dto)
         {
-            var itemCreado = await _carritoService.AddItem(item);
-            return Ok(itemCreado);
+            var studentId = GetStudentId();
+            if (studentId == null) return Unauthorized();
+
+            try
+            {
+                var item = await _carritoService.AddOrIncrement(studentId, dto.productoId, dto.cantidad);
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateItem(Guid id, [FromBody] int cantidad)
         {
-            return await _carritoService.UpdateItem(id, cantidad) ? Ok("Cantidad actualizada en el carrito") : NotFound();
+            var studentId = GetStudentId();
+            if (studentId == null) return Unauthorized();
+
+            try
+            {
+                return await _carritoService.UpdateItem(studentId, id, cantidad)
+                    ? Ok("Cantidad actualizada en el carrito")
+                    : NotFound();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveItem(Guid id)
         {
-            return await _carritoService.RemoveItem(id) ? Ok("Producto eliminado del carrito") : NotFound();
+            var studentId = GetStudentId();
+            if (studentId == null) return Unauthorized();
+
+            return await _carritoService.RemoveItem(studentId, id)
+                ? Ok("Producto eliminado del carrito")
+                : NotFound();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Clear()
+        {
+            var studentId = GetStudentId();
+            if (studentId == null) return Unauthorized();
+            await _carritoService.Clear(studentId);
+            return Ok("Carrito vaciado");
         }
     }
 }

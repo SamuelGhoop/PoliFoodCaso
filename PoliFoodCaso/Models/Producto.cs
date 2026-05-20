@@ -24,6 +24,10 @@ namespace PoliFoodCaso.Models
 
         public bool disponible { get; set; } = true;
 
+        [Required(ErrorMessage = "Debe ingresar las existencias")]
+        [Range(0, 9999, ErrorMessage = "Las existencias deben estar entre 0 y 9999")]
+        public int existencias { get; set; }
+
 
         [Required(ErrorMessage = "Debe ingresar el tiempo de preparación")]
         [Range(1, 120, ErrorMessage = "El tiempo de preparación debe estar entre 1 y 120 minutos")]

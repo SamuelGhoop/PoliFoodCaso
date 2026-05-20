@@ -1,4 +1,4 @@
-﻿using PoliFoodCaso.Models;
+using PoliFoodCaso.Models;
 
 namespace PoliFoodCaso.Interfaces
 {
@@ -6,10 +6,12 @@ namespace PoliFoodCaso.Interfaces
     {
         Task<List<CarritoItem>> GetByStudent(string studentId);
 
-        Task<CarritoItem> AddItem(CarritoItem item);
+        Task<CarritoItem> AddOrIncrement(string studentId, Guid productoId, int cantidad);
 
-        Task<bool> UpdateItem(Guid id, int cantidad);
+        Task<bool> UpdateItem(string studentId, Guid id, int cantidad);
 
-        Task<bool> RemoveItem(Guid id);
+        Task<bool> RemoveItem(string studentId, Guid id);
+
+        Task<bool> Clear(string studentId);
     }
 }

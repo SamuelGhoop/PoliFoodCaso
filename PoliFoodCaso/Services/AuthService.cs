@@ -36,13 +36,14 @@ namespace PoliFoodCaso.Services
 
             if (resultado.Succeeded)
             {
-                //Solo Admin puede venir del register, cualquier otro queda como Student
-                var rolValido = role == "Admin" ? "Admin" : "Student";
+                //El register público siempre crea Student. Admin y Vendor se crean
+                //por flujos dedicados protegidos por [Authorize(Roles="Admin")].
+                const string rolAsignado = "Student";
 
-                if (!await _manejadorRoles.RoleExistsAsync(rolValido))
-                    await _manejadorRoles.CreateAsync(new IdentityRole(rolValido));
+                if (!await _manejadorRoles.RoleExistsAsync(rolAsignado))
+                    await _manejadorRoles.CreateAsync(new IdentityRole(rolAsignado));
 
-                await _manejadorUsuarios.AddToRoleAsync(usuario, rolValido);
+                await _manejadorUsuarios.AddToRoleAsync(usuario, rolAsignado);
             }
 
             return resultado;
