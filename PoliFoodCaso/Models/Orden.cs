@@ -22,7 +22,6 @@ namespace PoliFoodCaso.Models
         [Range(0.01, double.MaxValue, ErrorMessage = "El total debe ser mayor a 0")]
         public double total { get; set; }
 
-        [Range(1, 120, ErrorMessage = "Los minutos estimados deben estar entre 1 y 120")]
         public int minutos_estimados { get; set; }
 
         public bool pago_confirmado { get; set; } = false;
