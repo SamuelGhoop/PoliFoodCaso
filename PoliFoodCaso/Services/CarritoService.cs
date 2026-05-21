@@ -19,6 +19,7 @@ namespace PoliFoodCaso.Services
             return await _context.CarritoItem
                 .Where(c => c.studentId == studentId)
                 .Include(c => c.producto)
+                    .ThenInclude(p => p!.categoria)
                 .ToListAsync();
         }
 
